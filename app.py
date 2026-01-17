@@ -1,8 +1,8 @@
 import streamlit as st
 import time
 from search_utils import rank_by_similarity
-from video_utils import fetch_tiktok_transcript
-from video_utils import fetch_instagram_transcript
+from search_module import fetch_recent_articles, summarize_articles2, fetch_recent_articles_advanced, analyze_reddit_sentiment
+from video_utils import fetch_tiktok_transcript, fetch_instagram_transcript
 
 
 # Splash container and state check
@@ -43,8 +43,6 @@ st.subheader("Understand Everyday Social & Political Standpoints")
 st.subheader("With a world with so much information anyone can get summaries, but what about the sentimental tidbits?")
 
 
-from search_module import fetch_recent_articles, summarize_articles
-
 # Create tabs
 tab1, tab2, tab3 = st.tabs(["General Search 🔍", "Video Submission 🎥", "Social Media Links 🔗"])
 
@@ -60,33 +58,77 @@ with tab1:
             st.warning("Please enter a topic!")
         else:
             st.write("Analyzing...", topic)
-            # Fetch relevant and lots of articles
-            articles = fetch_recent_articles(topic, num_articles=100)
+            # Fetch articles
+            raw_articles = fetch_recent_articles(topic, num_articles=20)
+            advanced_articles = fetch_recent_articles_advanced(topic, num_articles=100)
 
-            # Filter for relevance
-            ranked = rank_by_similarity(articles, topic)
-            relevant_articles = [a for a, score in ranked if score > 0.1][:5]
+            # Rank both sets by similarity
+            ranked_raw = rank_by_similarity(raw_articles, topic)
+            ranked_advanced = rank_by_similarity(advanced_articles, topic)
 
-            if not relevant_articles:
-                st.warning("No highly relevant recent articles found.")
-            else:
-                # Take top 5 relevant articles
-                relevant_articles = relevant_articles[:5]
+            # Filter relevant articles
+            relevant_raw = [a for a, score in ranked_raw if score > 0.1][:5]
+            relevant_advanced = [a for a, score in ranked_advanced if score > 0.1][:5]
+
+            # Display in columns
+            col1, col2 = st.columns(2)
+
+            # Left column Summary of advanced / highly relevant articles
+            with col1:
+                st.subheader("Summary")
+                if relevant_advanced:
+                    summary = summarize_articles2(relevant_advanced)
+                    st.info(summary)                    
+                else:
+                    st.info("No highly relevant articles to summarize.")
+
             
-                # Generate summary
-                summary = summarize_articles(relevant_articles)
-            
-                # Display results in columns
-                col1, col2 = st.columns(2)
-                with col1:
-                    st.subheader("Summary")
-                    st.info(summary)
-
-                # Display sources
-                with col2:
-                    st.subheader("Sources")
-                    for a in relevant_articles:
+            # Right column Sources
+            with col2:
+                st.subheader("Sources Advanced")
+                if relevant_advanced:
+                    for a in relevant_advanced:
                         st.markdown(f"- [{a['title']}]({a['url']}) ({a['source']['name']})")
+                else:
+                    st.info("No highly relevant advanced articles found.")
+
+                st.subheader("Sources Raw")
+                if relevant_raw:
+                    for a in relevant_raw:
+                        st.markdown(f"- [{a['title']}]({a['url']}) ({a['source']['name']})")
+                else:
+                    st.info("No relevant raw articles found.")
+                    
+            #REDDIT 
+            st.markdown("---")
+            st.subheader("💬 What People Are Saying (Reddit)")
+            
+            with st.spinner("Analyzing Reddit discussions..."):
+                reddit_analysis = analyze_reddit_sentiment(topic)
+            
+            if reddit_analysis.get('error'):
+                st.warning(f"Could not analyze Reddit sentiment: {reddit_analysis['error']}")
+            elif not reddit_analysis.get('perspectives'):
+                st.info("No Reddit discussions found for this topic.")
+            else:
+                # Display each perspective in its own section
+                perspectives = reddit_analysis['perspectives']
+                
+                for i, perspective in enumerate(perspectives, 1):
+                    # Create expander for each perspective
+                    with st.expander(f"**{perspective['label']}** 👥", expanded=(i==1)):
+                        st.write(perspective['summary'])
+                        
+                        if perspective.get('quotes'):
+                            st.markdown("**Representative Quotes:**")
+                            for quote in perspective['quotes']:
+                                # Display quote in a nice format
+                                st.markdown(f"""
+                                > *"{quote['text']}"*
+                                
+                                {quote['context']}
+                                """)
+                                st.markdown("")  # Spacing
 
 # Video Submission
 with tab2:
@@ -106,7 +148,7 @@ with tab2:
             st.write("Credibility: (coming soon)")
 
 with tab3:
-    st.header("Social Media Video → MeltTid")
+    st.header("Social Media Video → MeltTid Down!")
 
     video_url = st.text_input("Paste a TikTok or Instagram video/reel URL")
 
