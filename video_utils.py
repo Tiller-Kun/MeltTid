@@ -1,6 +1,12 @@
+
 import requests
 
-def fetch_tiktok_transcript(tiktok_url, api_key):
+SCRAPECREATORS_API_KEY = "MGnFdOTLWNb17FtwCJVUZqoNFAQ2"
+
+def fetch_tiktok_transcript(tiktok_url):
+    """
+    Fetches TikTok video transcript using ScrapeCreators API.
+    """
     endpoint = "https://api.scrapecreators.com/v1/tiktok/video/transcript"
 
     params = {
@@ -9,15 +15,19 @@ def fetch_tiktok_transcript(tiktok_url, api_key):
     }
 
     headers = {
-        "x-api-key": api_key,
+        "x-api-key": SCRAPECREATORS_API_KEY,
         "Content-Type": "application/json"
     }
 
-    response = requests.get(endpoint, headers=headers, params=params)
+    response = requests.get(endpoint, headers=headers, params=params, timeout=30)
     response.raise_for_status()
     return response.json()
 
-def fetch_instagram_transcript(instagram_url, api_key):
+
+def fetch_instagram_transcript(instagram_url):
+    """
+    Fetches Instagram post/reel transcript using ScrapeCreators API.
+    """
     endpoint = "https://api.scrapecreators.com/v2/instagram/media/transcript"
 
     params = {
@@ -25,10 +35,10 @@ def fetch_instagram_transcript(instagram_url, api_key):
     }
 
     headers = {
-        "x-api-key": api_key,
+        "x-api-key": SCRAPECREATORS_API_KEY,
         "Content-Type": "application/json"
     }
 
-    response = requests.get(endpoint, headers=headers, params=params)
+    response = requests.get(endpoint, headers=headers, params=params, timeout=30)
     response.raise_for_status()
     return response.json()
