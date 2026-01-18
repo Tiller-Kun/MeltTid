@@ -1,4 +1,4 @@
-# ** MeltTid **
+# 🧊 MeltTid
 
 # In today’s day and age, social-political opinions run vast, but how can we understand the people actually engaging with social media and their sentimental responses? MeltTid reveals those tidbits.
 
