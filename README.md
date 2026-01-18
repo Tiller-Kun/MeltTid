@@ -1,11 +1,14 @@
 # ** MeltTid **
 
-# In today’s day and age, social-political opinions run vast, but how can we understand the people actually engaging with social media and their sentimental responses?
-# MeltTid reveals those tidbits.
+# In today’s day and age, social-political opinions run vast, but how can we understand the people actually engaging with social media and their sentimental responses? MeltTid reveals those tidbits.
+
+@HackWilliams2026 - Tyler M, Tao C, Aunonto R
 
 Our project, MeltTid, was inspired by the fast-moving, often frightening news and social media cycle and the desire to understand how people react to political and emotional content on various media platforms. 
 Using the skills we developed in Williams CS courses, and the strengths of todays LLM's and API's we built a Python-based Streamlit platform that pulls data from multiple APIs and makes it easy to analyze, scalable for more social media platforms. 
 We combine AI tools with well-rounded, reliable sources. Along the way, we faced challenges in gathering relevant data, debugging with bot walls or api limits, and making sense of diverse opinions, but these obstacles taught us how to integrate technology, critical thinking, and our education to make sense of a complex world while staying grounded in trustworthy information and that the sentimental voices of people matter.
+
+See our presentation here -> https://www.canva.com/design/DAG-n6oWRKk/fYULIL9Dy4tnOQR-R36dGQ/edit?utm_content=DAG-n6oWRKk&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 🚀 Setup & Installation
 To run MeltTid locally, you’ll need API keys and Python libraries.
@@ -30,3 +33,4 @@ pip install streamlit scikit-learn requests python-dotenv
 
 4️⃣ Run the App
 streamlit run app.py
+
