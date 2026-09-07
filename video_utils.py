@@ -1,7 +1,7 @@
 
 import requests
 
-SCRAPECREATORS_API_KEY = "MGnFdOTLWNb17FtwCJVUZqoNFAQ2"
+SCRAPECREATORS_API_KEY = # key here
 
 def fetch_tiktok_transcript(tiktok_url):
     """
