@@ -8,11 +8,11 @@ import re
 from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeoutError 
 
 #Sample API Keys Free and Limited
-#675805e1ac0b48caa2778d055ddc1b63 Tyler 
-NEWS_API_KEY = "9d4a28ce6fd8435faab2b8980767c800"
-GEMINI_API_KEY = "AIzaSyBv8EXo0hU8o3Lvnh4jYk4wy4Ta3PG5-GA"
+
+NEWS_API_KEY = # key here
+GEMINI_API_KEY = # key here
 genai.configure(api_key=GEMINI_API_KEY)
-TWITTER_BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAJpX7AEAAAAA%2B4crmsAR7giZ1XAv9xdAKtxnLWM%3D9t6hekgEexYyqWWHvnkbHSx6A6aCrSqgqyi9TzS4o4LIXRFlMe"
+TWITTER_BEARER_TOKEN = # key here
 headers = {"Authorization": f"Bearer {TWITTER_BEARER_TOKEN}"}
 
 reddit = praw.Reddit(
