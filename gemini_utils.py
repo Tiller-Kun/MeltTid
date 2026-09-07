@@ -2,7 +2,7 @@
 import google.generativeai as genai
 import os
 
-GEMINI_API_KEY = "AIzaSyBv8EXo0hU8o3Lvnh4jYk4wy4Ta3PG5-GA"
+GEMINI_API_KEY = # key here
 genai.configure(api_key=GEMINI_API_KEY)
 
 def gemini_analyze_transcript(transcript: str) -> str:
