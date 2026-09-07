@@ -6,7 +6,7 @@ from video_utils import fetch_tiktok_transcript, fetch_instagram_transcript
 from gemini_utils import gemini_analyze_transcript, analyze_video_with_gemini
 import os
 import asyncio
-SCRAPECREATORS_API_KEY = "MGnFdOTLWNb17FtwCJVUZqoNFAQ2"
+SCRAPECREATORS_API_KEY = # key here
 
 
 # Splash container and state check
